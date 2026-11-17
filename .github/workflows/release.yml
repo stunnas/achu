@@ -59,10 +59,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '24'
-          cache: 'npm'
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.2.23'
 
       - name: Install dependencies
-        run: npm ci
+        run: bun install --frozen-lockfile
         env:
           SHARP_IGNORE_GLOBAL_LIBVIPS: '1'
 
@@ -71,6 +75,7 @@ jobs:
         run: |
           SHARP_VERSION=$(node -p "require('./node_modules/sharp/package.json').version")
           mkdir -p node_modules/@img
+          # npm stays here only for its --os/--cpu cross-platform install of sharp binaries.
           for CPU in x64 arm64; do
             rm -rf "./.sharp-stage/$CPU"
             mkdir -p "./.sharp-stage/$CPU"
@@ -84,13 +89,13 @@ jobs:
           SHARP_IGNORE_GLOBAL_LIBVIPS: '1'
 
       - name: Update package.json version
-        run: npm version ${{ needs.version.outputs.version }} --no-git-tag-version
+        run: bun pm version ${{ needs.version.outputs.version }} --no-git-tag-version
 
       - name: Build renderer + main + preload
-        run: npm run build
+        run: bun run build
 
       - name: Package Electron app (${{ matrix.platform }})
-        run: npx electron-builder --${{ matrix.platform }} --publish never
+        run: bunx electron-builder --${{ matrix.platform }} --publish never
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

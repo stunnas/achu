@@ -17,8 +17,8 @@ secrets, or IP addresses. An IP address is used only as the rate-limit key.
 
 ```bash
 cd telemetry-worker
-npm ci
-npx wrangler d1 create achu-telemetry
+bun install --frozen-lockfile
+bunx wrangler d1 create achu-telemetry
 ```
 
 Paste the database ID printed by Wrangler into `d1_databases[0].database_id` in
@@ -26,10 +26,10 @@ Paste the database ID printed by Wrangler into `d1_databases[0].database_id` in
 placeholder until the database is created.
 
 ```bash
-npx wrangler d1 migrations apply achu-telemetry --remote
+bunx wrangler d1 migrations apply achu-telemetry --remote
 # Generate a token with: openssl rand -hex 32
-npx wrangler secret put STATS_TOKEN
-npx wrangler deploy
+bunx wrangler secret put STATS_TOKEN
+bunx wrangler deploy
 ```
 
 The custom domain `telemetry.achu.app` requires the `achu.app` zone to be on Cloudflare.
@@ -39,9 +39,9 @@ The custom domain `telemetry.achu.app` requires the `achu.app` zone to be on Clo
 Always apply database migrations before deploying code that depends on them:
 
 ```bash
-npm ci
-npx wrangler d1 migrations apply achu-telemetry --remote
-npx wrangler deploy
+bun install --frozen-lockfile
+bunx wrangler d1 migrations apply achu-telemetry --remote
+bunx wrangler deploy
 ```
 
 ## Viewing stats
@@ -57,8 +57,8 @@ Both stats endpoints require `STATS_TOKEN`. The HTML page is titled "achu teleme
 ## Testing
 
 ```bash
-npm ci
-npm run typecheck
-npm test
-npm run deploy:dry
+bun install --frozen-lockfile
+bun run typecheck
+bun run test
+bun run deploy:dry
 ```

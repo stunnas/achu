@@ -129,7 +129,7 @@ Right-click an annotation and choose **Reset Rotation** to straighten it without
 
 ### Prerequisites
 * **Node.js** 18 or higher
-* **npm**
+* **Bun** 1.2 or higher (package manager and script runner)
 
 ### Installation
 1. Clone the repository:
@@ -140,12 +140,12 @@ Right-click an annotation and choose **Reset Rotation** to straighten it without
 
 2. Install dependencies:
    ```bash
-   npm install
+   bun install
    ```
 
 3. Launch development mode with Hot Reload:
    ```bash
-   npm run dev
+   bun run dev
    ```
 
 ---
@@ -156,10 +156,10 @@ achu uses `electron-builder` to package lightweight native binaries for Windows,
 
 | Script | Action | Output / Description |
 | :--- | :--- | :--- |
-| `npm run build` | Compile code | Generates optimized production bundles in `app-bundle/` |
-| `npm run test` | Run tests | Runs unit and rendering tests using `Vitest` |
-| `npm run test:coverage` | Coverage | Generates a coverage report via `v8` |
-| `npm run package` | Pack App | Builds production bundles and packages portable packages in `release/` |
+| `bun run build` | Compile code | Generates optimized production bundles in `app-bundle/` |
+| `bun run test` | Run tests | Runs unit and rendering tests using `Vitest` |
+| `bun run test:coverage` | Coverage | Generates a coverage report via `v8` |
+| `bun run package` | Pack App | Builds production bundles and packages portable packages in `release/` |
 
 * **Windows Target:** Standalone portable `.exe` executable (x64 / arm64).
 * **Linux Target:** Standalone AppImage and `.deb` packages.
@@ -210,15 +210,15 @@ A local build never receives the browser download quarantine flag:
 ```bash
 git clone https://github.com/QAInsights/achu.git
 cd achu
-npm install
-npm run dev
+bun install
+bun run dev
 ```
 
 To package a local app bundle instead of using the release DMG:
 
 ```bash
-npm run build
-npx electron-builder --mac --publish never
+bun run build
+bunx electron-builder --mac --publish never
 ```
 
 #### Permanent fix (roadmap)
